@@ -1,4 +1,4 @@
-package com.newgen.sessions.controller.exception;
+package com.newgen.sessions.exception;
 
 
 import org.springframework.http.HttpStatus;
