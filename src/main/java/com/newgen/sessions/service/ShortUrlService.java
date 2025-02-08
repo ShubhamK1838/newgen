@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface ShortUrlService {
 
+    ShortUrl saveShortUrl(ShortUrl shortUrl);
+    
     ShortUrl getUrlById(String id);
 
     ShortUrl getUrlByShortUrl(String shortUrl);

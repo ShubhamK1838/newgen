@@ -1,5 +1,6 @@
 package com.newgen.sessions.entity;
 
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
+@Entity
 public class ShortUrl {
 
 

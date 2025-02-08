@@ -6,7 +6,9 @@ import com.newgen.sessions.repo.ShortUrlRepository;
 import com.newgen.sessions.service.ShortUrlService;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ShortUrlServiceImpl implements ShortUrlService {
@@ -18,37 +20,55 @@ public class ShortUrlServiceImpl implements ShortUrlService {
     }
 
     @Override
+    public ShortUrl saveShortUrl(ShortUrl shortUrl) {
+        shortUrl.setIssuedDate(new Date());
+        return shortUrlRepository.save(shortUrl);
+    }
+
+    @Override
     public ShortUrl getUrlById(String id) {
         return shortUrlRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Url Not Found "));
+                .orElse(null);
     }
 
     @Override
     public ShortUrl getUrlByShortUrl(String shortUrl) {
-        return shortUrlRepository.findByShortUrl(shortUrl).orElseThrow(() -> new RuntimeException("Enter Valid URl"));
+        return shortUrlRepository.findByShortUrl(shortUrl).orElse(null);
     }
 
     @Override
     public ShortUrl getUrlByOriginalUrl(String originalUrl) {
-        return shortUrlRepository.findByOriginalUrl(originalUrl).orElseThrow(() -> new RuntimeException("The Url Is Not Found "));
+        return shortUrlRepository.findByOriginalUrl(originalUrl).orElse(null);
     }
 
     @Override
     public boolean deleteUrlByShortUrl(String shortUrl) {
-        shortUrlRepository.delete(getUrlByShortUrl(shortUrl));
-        return true;
+        var entity = getUrlByShortUrl(shortUrl);
+        if (entity != null) {
+            shortUrlRepository.delete(entity);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean deleteUrlByOriginalUrl(String originalUrl) {
-        shortUrlRepository.delete(getUrlByOriginalUrl(originalUrl));
-        return true;
+        var entity = getUrlByOriginalUrl(originalUrl);
+        if (entity != null) {
+            shortUrlRepository.delete(entity);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public boolean deleteUrlById(String id) {
-        shortUrlRepository.delete(getUrlById(id));
-        return true;
+        var entity = getUrlById(id);
+        if (entity != null) {
+            shortUrlRepository.delete(entity);
+            return true;
+        }
+        return false;
     }
 
     @Override
