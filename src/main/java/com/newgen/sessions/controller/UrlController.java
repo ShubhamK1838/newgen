@@ -4,22 +4,17 @@ package com.newgen.sessions.controller;
 import com.newgen.sessions.entity.ShortUrl;
 import com.newgen.sessions.service.ShortUrlService;
 import jakarta.servlet.http.HttpServletResponse;
-import org.hibernate.dialect.sequence.HANASequenceSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/url")
@@ -61,7 +56,7 @@ public class UrlController {
         if (urlEntity != null) {
             res.sendRedirect(urlEntity.getOriginalUrl());
         }
-        return "Invalid URL";
+        return "<h1>Invalid URL</h1>";
     }
 
     @GetMapping("/list")
@@ -75,7 +70,6 @@ public class UrlController {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
             byte[] hash = digest.digest(longUrl.getBytes(StandardCharsets.UTF_8));
-
             String base64Hash = Base64.getUrlEncoder().encodeToString(hash);
             return base64Hash.substring(0, SHORT_URL_LENGTH);
         } catch (NoSuchAlgorithmException e) {
@@ -83,10 +77,7 @@ public class UrlController {
 
             return null;
         }
-
-
     }
-
 }
 
 
