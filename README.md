@@ -17,3 +17,33 @@ The **Sessions** project is a demo application built with **Spring Boot** that i
 - **JUnit**: For testing the application.
 
 ## Project Structure
+sessions
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── newgen
+│   │   │           └── sessions
+│   │   │               ├── SessionsApplication.java
+│   │   │               ├── controller
+│   │   │               │   └── UrlController.java
+│   │   │               ├── entity
+│   │   │               │   └── ShortUrl.java
+│   │   │               ├── exception
+│   │   │               │   ├── ExceptionHandler.java
+│   │   │               │   └── ExceptionResponse.java
+│   │   │               ├── repo
+│   │   │               │   └── ShortUrlRepository.java
+│   │   │               └── service
+│   │   │                   ├── ShortUrlService.java
+│   │   │                   └── impl
+│   │   │                       └── ShortUrlServiceImpl.java
+│   │   └── resources
+│   │       └── application.properties
+│   └── test
+│       └── java
+│           └── com
+│               └── newgen
+│                   └── sessions
+│                       └── SessionsApplicationTests.java
+└── pom.xml
