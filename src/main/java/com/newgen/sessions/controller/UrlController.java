@@ -18,17 +18,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/url")
+@CrossOrigin("http://localhost:5174")
 public class UrlController {
 
     @Autowired
     private ShortUrlService urlService;
     private final static String BASEURL = "http://localhost:8080/url/";
 
+
     @PostMapping("/short-url")
     public ResponseEntity<?> shortUrl(@RequestParam String url) {
         ShortUrl urlEntity = urlService.getUrlByOriginalUrl(url);
         if (urlEntity != null) {
-            return ResponseEntity.ok().body(urlEntity.getShortUrl());
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(urlEntity.getShortUrl());
         } else {
             String shortUrl = generateShortUrl(url);
             ShortUrl entity = new ShortUrl();
@@ -36,12 +38,12 @@ public class UrlController {
             entity.setId(shortUrl);
             entity.setOriginalUrl(url);
             entity = urlService.saveShortUrl(entity);
-            return ResponseEntity.ok().body(entity.getShortUrl());
+            return ResponseEntity.status(HttpStatus.CREATED).body(entity.getShortUrl());
         }
     }
 
     @GetMapping("/{id}/long-url")
-    public ResponseEntity<String> extractUrl(@PathVariable String id) {
+    public ResponseEntity<String> extractUrl( @PathVariable String id) {
         ShortUrl urlEntity = urlService.getUrlById(id);
         if (urlEntity != null) {
             return ResponseEntity.ok().body(urlEntity.getOriginalUrl());
